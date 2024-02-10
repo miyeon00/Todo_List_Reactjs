@@ -38,4 +38,16 @@
   }
 }
 
+.container{
+  margin: 0 auto;
+  width: 100%;
+  max-width: 810px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
 
+.main {
+  max-width: 810px;
+  width: 100%;
+  margin: 0 auto;
+}

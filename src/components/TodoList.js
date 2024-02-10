@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import Filter from './Filter';
 import TodoItem from './TodoItem';
-import style from './TodoList.module.css';
+import classes from './TodoList.module.css';
+import Button from 'react-bootstrap/Button';
+
 
 function TodoList(prop) {
     const [tasks, setTasks] = useState([]);
@@ -59,19 +61,28 @@ function TodoList(prop) {
         }));
     }
 
+    const onChange = (e) => {
+            let {value} = {...e.target}
+            SetText(value)
+    };
+
     return (
         <>
-            <div className={style.container}>
-            <input
-                id="todoText"
-                type="text"
-                placeholder="new todo"
-                value={text}
-                onChange={e => SetText(e.target.value)}
-            />
-            <button onClick={() => addTask(text)}>Add</button>
-            {filterList}
+            <div className={classes.container}>
+                <div className={classes.form}>
+                    <input
+                        className={classes.form_input}
+                        name="todo"
+                        id="todoText"
+                        type="text"
+                        placeholder="new todo"
+                        value={text}
+                        onChange={onChange}
+                    />
+                    <Button onClick={() => addTask(text)} className={classes.add_button}>Add</Button>
+                </div>
             </div>
+            {filterList}
             <div>
                 {tasks
                     .filter(FILTER_MAP[filter])
@@ -86,7 +97,7 @@ function TodoList(prop) {
                     ))}
             </div>
 
-     </>
+        </>
     );
 
 }

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import ListGroup from 'react-bootstrap/ListGroup';
 
 function TodoItem({ task, deleteTask, editTask, toggleCompleted }) {
 
@@ -9,7 +10,7 @@ function TodoItem({ task, deleteTask, editTask, toggleCompleted }) {
         toggleCompleted(task.id);
     }
 
-    function saveEdit(){
+    function saveEdit() {
         editTask(task.id, todoText);
         setEditing(false);
     }
@@ -19,35 +20,38 @@ function TodoItem({ task, deleteTask, editTask, toggleCompleted }) {
             saveEdit();
             return;
         }
-      }
+    }
 
     return (
-        <div>
-            <div>
-                <input
-                    type="checkbox"
-                    checked={task.completed}
-                    onChange={handleChange}
-                />
-            </div>
-            <div style={{ textDecoration: task.completed ? "line-through" : "" }}>
-                {!editing && <div >{task.text}</div>}
-                {editing && (
+        <ListGroup as="ol">
+            <ListGroup.Item as="li" classNmae="d-flex justify-content-between align-items-start">
+                <div lassName="ms-2 me-auto">
                     <input
-                        onKeyDown={onEnterPressHandler}
-                        type="text"
-                        value={todoText}
-                        onChange={(e) => setTodoText(e.target.value)}
-                    ></input>
-                )}
-            </div>
-            <div>
-                <button onClick={() => setEditing(true)}>edit</button>
-                <button onClick={() => deleteTask(task.id)}>
-                    X
-                </button>
-            </div>
-        </div>
+                        type="checkbox"
+                        checked={task.completed}
+                        onChange={handleChange}
+                    />
+                    <div style={{ textDecoration: task.completed ? "line-through" : "" }}>
+                        {!editing && <div >{task.text}</div>}
+                        {editing && (
+                            <input
+                                onKeyDown={onEnterPressHandler}
+                                type="text"
+                                value={todoText}
+                                onChange={(e) => setTodoText(e.target.value)}
+                            ></input>
+                        )}
+                        <button onClick={() => setEditing(true)}>edit</button>
+                        <button onClick={() => deleteTask(task.id)}>
+                            X
+                        </button>
+                    </div>
+
+                </div>
+
+
+            </ListGroup.Item>
+        </ListGroup>
     )
 }
 
