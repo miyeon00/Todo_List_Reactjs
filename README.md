@@ -2,6 +2,10 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## ScreenShots
+![image](https://github.com/miyeon00/Todo_List_Reactjs/assets/40354305/d6bd8ffe-2184-4f3d-8404-6d6a8c9b52fd)
+
+
 ## Available Scripts
 
 In the project directory, you can run:
@@ -64,6 +68,8 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/a
 ### Deployment
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+
+
 
 ### `npm run build` fails to minify
 
