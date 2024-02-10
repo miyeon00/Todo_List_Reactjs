@@ -1,26 +1,54 @@
-import React from "react";
-function TodoItem({ task, deleteTask, toggleCompleted }) {
+import React, { useState } from "react";
+
+function TodoItem({ task, deleteTask, editTask, toggleCompleted }) {
+
+    const [editing, setEditing] = useState(false);
+    const [todoText, setTodoText] = useState(task.text);
 
     function handleChange() {
         toggleCompleted(task.id);
     }
 
+    function saveEdit(){
+        editTask(task.id, todoText);
+        setEditing(false);
+    }
+
+    const onEnterPressHandler = (event) => {
+        if (event.key === 'Enter') {
+            saveEdit();
+            return;
+        }
+      }
+
     return (
-        <div class="tab-pane fade show active" id="ex1-tabs-1" role="tabpanel"
-            aria-labelledby="ex1-tab-1">
-            <ul class="list-group mb-0">
-                <li class="list-group-item d-flex d-flex justify-content-between align-items-center border-start-0 border-top-0 border-end-0 border-bottom rounded-0 mb-2" bgcolor="#f4f6f7">
-                    <div class="d-flex align-items-center">
-                        <input type="checkbox" class="form-check-input me-2" checked={task.completed} onChange={handleChange} />
-                        {task.text}
-                    </div>
-                    <button onClick={() => deleteTask(task.id)} type="button" class="btn btn-light"><i class="fas fa-times text-primary"></i></button>
-                </li>
-
-            </ul>
+        <div>
+            <div>
+                <input
+                    type="checkbox"
+                    checked={task.completed}
+                    onChange={handleChange}
+                />
+            </div>
+            <div style={{ textDecoration: task.completed ? "line-through" : "" }}>
+                {!editing && <div >{task.text}</div>}
+                {editing && (
+                    <input
+                        onKeyDown={onEnterPressHandler}
+                        type="text"
+                        value={todoText}
+                        onChange={(e) => setTodoText(e.target.value)}
+                    ></input>
+                )}
+            </div>
+            <div>
+                <button onClick={() => setEditing(true)}>edit</button>
+                <button onClick={() => deleteTask(task.id)}>
+                    X
+                </button>
+            </div>
         </div>
-    );
-
+    )
 }
 
 export default TodoItem;

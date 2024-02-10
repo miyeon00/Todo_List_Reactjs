@@ -1,30 +1,52 @@
 import React, { useState } from 'react';
+import Filter from './Filter';
 import TodoItem from './TodoItem';
+import style from './TodoList.module.css';
 
-function TodoList() {
+function TodoList(prop) {
     const [tasks, setTasks] = useState([]);
-    const [text, setText] = useState('');
+    const [text, SetText] = useState('');
 
-    const FILTER_MAP={
-        All: ()=>true,
-        Active:(task) => !task.completed,
-        Complted:(task) => task.completed
+    const [filter, setFilter] = useState("All");
+
+    const FILTER_MAP = {
+        All: () => true,
+        Active: (task) => !task.completed,
+        Completed: (task) => task.completed,
     };
 
-    const FILTER_NAMES= Object.keys(FILTER_MAP);
+    const FILTER_NAMES = Object.keys(FILTER_MAP);
+
+    const filterList = FILTER_NAMES.map((name) => (
+        <Filter
+            key={name}
+            name={name}
+            setFilter={setFilter} />
+    ));
 
     function addTask(text) {
         const newTask = {
             id: Date.now(),
-            text: text,
-            completed: false
+            text,
+            completed: false,
+            editFlag: false
         };
+
         setTasks([...tasks, newTask]);
-        setText('');
+        SetText('');
+
     }
 
     function deleteTask(id) {
         setTasks(tasks.filter(task => task.id !== id));
+    }
+
+    function editTask(id, text) {
+        setTasks(tasks.map(task => {
+            if (task.id === id) {
+                return { ...task, text: text };
+            }
+        }));
     }
 
     function toggleCompleted(id) {
@@ -35,30 +57,38 @@ function TodoList() {
                 return task;
             }
         }));
-
     }
 
     return (
-        <div className='todo-list'>
-            <div class="d-flex justify-content-center align-items-center mb-4">
-                <div class="form-outline flex-fill">
-                    <input class="form-control" value={text} onChange={e => setText(e.target.value)} />
-                    <label class="form-label">New task...</label>
-                </div>
-                <button class="btn btn-info ms-2" onClick={() => addTask(text)}>Add</button>
+        <>
+            <div className={style.container}>
+            <input
+                id="todoText"
+                type="text"
+                placeholder="new todo"
+                value={text}
+                onChange={e => SetText(e.target.value)}
+            />
+            <button onClick={() => addTask(text)}>Add</button>
+            {filterList}
             </div>
-            {
-                tasks.map(task => (
-                    <TodoItem
-                        key={task.id}
-                        task={task}
-                        deleteTask={deleteTask}
-                        toggleCompleted={toggleCompleted}
-                    />
-                ))
-            }
-        </div>
-    )
+            <div>
+                {tasks
+                    .filter(FILTER_MAP[filter])
+                    .map(task => (
+                        <TodoItem
+                            key={task.id}
+                            task={task}
+                            deleteTask={deleteTask}
+                            editTask={editTask}
+                            toggleCompleted={toggleCompleted}
+                        />
+                    ))}
+            </div>
+
+     </>
+    );
+
 }
 
 export default TodoList;
