@@ -2,9 +2,11 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Live Page
+https://miyeon00.github.io/Todo_List_Reactjs/
+
 ## ScreenShots
 ![image](https://github.com/miyeon00/Todo_List_Reactjs/assets/40354305/d6bd8ffe-2184-4f3d-8404-6d6a8c9b52fd)
-
 
 ## Available Scripts
 
